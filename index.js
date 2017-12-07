@@ -9,8 +9,9 @@ var servers = {};
 function play(connection, message) {
   var server = servers[message.guild.id];
 
+  
   server.dispatcher = connection.playStream(YTDL(server.queue[0], {filter: "audioonly"}));
-  message.reply(":white_check_mark: Succefully Added song to Queue. :white_check_mark: ")
+  
 
   server.queue.shift();
 
@@ -87,6 +88,7 @@ client.on("message", async message => {
   }
 
     if (command === prefix+"play") {
+      var server = servers[message.guild.id];
       if (!args[0]) {
         message.channel.send("Please Provide a link.")
         return;
@@ -97,24 +99,41 @@ client.on("message", async message => {
         return;
       }
 
+
       if (!servers[message.guild.id]) servers[message.guild.id] = {
         queue: []
       }
 
+      
+
       var server = servers[message.guild.id]
+      if(!server.queue[0]) {
+        message.reply(":white_check_mark: Succefully Started playing song. :white_check_mark: ")
+        console.log(server.queue)
+    
+      }
+      if(server.queue[0]) {
+        message.reply(":white_check_mark: Succefully added song to playlist. :white_check_mark: ")
+        console.log(server.queue)
+        
+      }
 
       server.queue.push(args[0]);
 
       if (!message.guild.voiceConnection) message.member.voiceChannel.join().then(function(connection) {
         //console.log(message.guild.member(client.user).voiceChannel)
     
+        
+
         play(connection, message);
 
 
       });
 
-    }
+      
+    
 
+    }
 
 
     if (command === prefix+"skip") {
