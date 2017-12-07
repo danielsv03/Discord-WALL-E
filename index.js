@@ -167,18 +167,6 @@ client.on("message", async message => {
 
     }
 
-    if (command === prefix+"purge") {
-      console.log(message.author.username + "  Requested:   " + message.content);
-      let messagecount = args[0];
-      if (messagecount <= 1) {
-        message.reply("hold up!, It need to be more than "+args[0])
-
-      } else {
-        //console.log(messagecount)
-        message.channel.fetchMessages({limit: messagecount}).then(messages => message.channel.bulkDelete(messages));
-        //message.delete()
-      }
-    }
 
 
     if(command === `${prefix}newprefix`) {
