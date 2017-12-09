@@ -49,6 +49,8 @@ client.on("message", async message => {
   let messageArray = message.content.split(" ");
   let command = messageArray[0];
   let args = messageArray.slice(1);
+
+  console.log("musarg ==== "+musarg)
   //console.log(args);
   //console.log(client.users.find("username", 'MuZZ').createdAt)
 
@@ -95,6 +97,7 @@ client.on("message", async message => {
 
 
     if (command === prefix+"play") {
+      var musarg = message.content.replace(prefix+"play", '')
       var server = servers[message.guild.id];
       if (!args[0]) {
         message.channel.send("Please Provide a link.")
@@ -111,7 +114,7 @@ client.on("message", async message => {
         queue: []
       }
 
-      message.reply("Searching for: "+args[0])
+      message.reply("Searching for: "+musarg)
       var server = servers[message.guild.id]
 
 
@@ -123,7 +126,7 @@ client.on("message", async message => {
       
             youTube.setKey('AIzaSyB1OOSpTREs85WUMvIgJvLTZKye4BVsoFU');
       
-            youTube.search(args[0], 1, function(error, result) {
+            youTube.search(musarg, 1, function(error, result) {
               if (error) {
                 console.log(error);
               }
