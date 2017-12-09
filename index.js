@@ -50,7 +50,7 @@ client.on("message", async message => {
   let command = messageArray[0];
   let args = messageArray.slice(1);
 
-  console.log("musarg ==== "+musarg)
+  //console.log("musarg ==== "+musarg)
   //console.log(args);
   //console.log(client.users.find("username", 'MuZZ').createdAt)
 
