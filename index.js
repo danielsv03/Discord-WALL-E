@@ -87,6 +87,13 @@ client.on("message", async message => {
 
   }
 
+    if (command === prefix+"invite") {
+
+      message.reply("Here is my invite link:  https://discordapp.com/api/oauth2/authorize?client_id=387327239672430594&permissions=8&scope=bot")
+
+    }
+
+
     if (command === prefix+"play") {
       var server = servers[message.guild.id];
       if (!args[0]) {
