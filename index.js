@@ -104,21 +104,66 @@ client.on("message", async message => {
         queue: []
       }
 
-      
-
+      message.reply("Searching for: "+args[0])
       var server = servers[message.guild.id]
-      if(!server.queue[0]) {
-        message.reply(":white_check_mark: Succefully Started playing song. :white_check_mark: ")
-        console.log(server.queue)
+
+
+
+
+      var YouTube = require('youtube-node');
+      
+            var youTube = new YouTube();
+      
+            youTube.setKey('AIzaSyB1OOSpTREs85WUMvIgJvLTZKye4BVsoFU');
+      
+            youTube.search(args[0], 1, function(error, result) {
+              if (error) {
+                console.log(error);
+              }
+              else {
+                vidid = result.items[0].id.videoId
+                url = ("https://www.youtube.com/watch?v="+vidid)
+                //console.log(url)
+                server.queue.push(url);
+
+                //let requs = (client.users.find("username", args[0]));
+                let embed = new Discord.RichEmbed()
+                //.setAuthor(message.author.username)
+                .setColor("#ff0000")
+                .setTitle("Song Info")
+                .setDescription("This is the youtube song info!")
+                .setThumbnail(result.items[0].snippet.thumbnails.high.url)
+                .addField("Song name", result.items[0].snippet.title)
+                .addField("Channel Name", result.items[0].snippet.channelTitle)
+                .addField("Published At", result.items[0].snippet.publishedAt)
+                .addField("Song Requested by:", message.author);
+                //.addField("Created At", requs.createdAt);
+                //.addField("Created At", requs.createdAt);
+              message.channel.send(embed);
+
+
+                
+              }
+            });
+
+
+
+
+
+      if(!server.queue[1]) {
+        //message.reply(":white_check_mark: Succefully Found song.. :white_check_mark: ")
+        
+
+        //console.log(server.queue)
     
       }
-      if(server.queue[0]) {
+      if(server.queue[1]) {
         message.reply(":white_check_mark: Succefully added song to playlist. :white_check_mark: ")
-        console.log(server.queue)
+        //console.log(server.queue)
         
       }
 
-      server.queue.push(args[0]);
+
 
       if (!message.guild.voiceConnection) message.member.voiceChannel.join().then(function(connection) {
         //console.log(message.guild.member(client.user).voiceChannel)
