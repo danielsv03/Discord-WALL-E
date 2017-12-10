@@ -225,6 +225,12 @@ client.on("message", async message => {
     if (command === prefix+"purge") {
       console.log(message.author.username + "  Requested:   " + message.content);
       let messagecount = args[0];
+      if (!message.member.hasPermission('ADMINISTRATOR')) {
+        message.reply("Hold up!, You need to be Administrator too use this!")
+        return;
+
+      }
+      console.log(message.author.roles)
       if (messagecount <= 1) {
         message.reply("hold up!, It need to be more than "+args[0])
 
@@ -254,19 +260,17 @@ client.on("message", async message => {
 
 
     if (message.content === prefix+'help') {
-      message.author.send(" _____________________________")
-      message.author.send("Here is a list of Commands.")
-      //message.author.send(" ")
-      message.author.send(" * !purge number")
-      message.author.send(" * !newprefix new-prefix")
-      message.author.send(" * !about")
-      message.author.send(" * ping")
-      message.author.send(" __And Some muzic Stuff__")
-      //message.author.send(" ")
-      message.author.send(" * !play Youtube-link")
-      message.author.send(" * !skip")
-      message.author.send(" * !stop")
-      message.author.send(" ____________________________")
+      message.author.send("```Here is a list of my commands please note that all of these commands has the set prefix before \
+      * purge number NOTE: Only for ADMINISTRATORS \
+      * newprefix prefix \
+      * userinfo user NOTE: if no user defined the user info will be of you \
+      * help \
+      ____________Music__________ \
+      *play song name \
+      *skip \
+      *stop \
+      I'm adding more stuff soon, if you have contact with DanielSv03 please feel free to suggest improvments :) ```")
+      
     }
 })
 
