@@ -49,6 +49,8 @@ client.on("message", async message => {
   let messageArray = message.content.split(" ");
   let command = messageArray[0];
   let args = messageArray.slice(1);
+
+  //console.log("musarg ==== "+musarg)
   //console.log(args);
   //console.log(client.users.find("username", 'MuZZ').createdAt)
 
@@ -87,7 +89,15 @@ client.on("message", async message => {
 
   }
 
+    if (command === prefix+"invite") {
+
+      message.reply("Here is my invite link:  https://discordapp.com/api/oauth2/authorize?client_id=387327239672430594&permissions=8&scope=bot")
+
+    }
+
+
     if (command === prefix+"play") {
+      var musarg = message.content.replace(prefix+"play", '')
       var server = servers[message.guild.id];
       if (!args[0]) {
         message.channel.send("Please Provide a link.")
@@ -104,6 +114,7 @@ client.on("message", async message => {
         queue: []
       }
 
+<<<<<<< HEAD
 
 
       var server = servers[message.guild.id]
@@ -111,14 +122,73 @@ client.on("message", async message => {
         message.reply(":white_check_mark: Succefully Started playing song. :white_check_mark: ")
         console.log(server.queue)
 
+=======
+      message.reply("Searching for: "+musarg)
+      var server = servers[message.guild.id]
+
+
+
+
+      var YouTube = require('youtube-node');
+      
+            var youTube = new YouTube();
+      
+            youTube.setKey('AIzaSyB1OOSpTREs85WUMvIgJvLTZKye4BVsoFU');
+      
+            youTube.search(musarg, 1, function(error, result) {
+              if (error) {
+                console.log(error);
+              }
+              else {
+                vidid = result.items[0].id.videoId
+                url = ("https://www.youtube.com/watch?v="+vidid)
+                //console.log(url)
+                server.queue.push(url);
+
+                //let requs = (client.users.find("username", args[0]));
+                let embed = new Discord.RichEmbed()
+                //.setAuthor(message.author.username)
+                .setColor("#ff0000")
+                .setTitle("Song Info")
+                .setDescription("This is the youtube song info!")
+                .setThumbnail(result.items[0].snippet.thumbnails.high.url)
+                .addField("Song name", result.items[0].snippet.title)
+                .addField("Channel Name", result.items[0].snippet.channelTitle)
+                .addField("Published At", result.items[0].snippet.publishedAt)
+                .addField("Song Requested by:", message.author);
+                //.addField("Created At", requs.createdAt);
+                //.addField("Created At", requs.createdAt);
+              message.channel.send(embed);
+
+
+                
+              }
+            });
+
+
+
+
+
+      if(!server.queue[1]) {
+        //message.reply(":white_check_mark: Succefully Found song.. :white_check_mark: ")
+        
+
+        //console.log(server.queue)
+    
+>>>>>>> f98f5fbbe337f1dedb90112c648aa62a1ab4af14
       }
-      if(server.queue[0]) {
+      if(server.queue[1]) {
         message.reply(":white_check_mark: Succefully added song to playlist. :white_check_mark: ")
+<<<<<<< HEAD
         console.log(server.queue)
 
+=======
+        //console.log(server.queue)
+        
+>>>>>>> f98f5fbbe337f1dedb90112c648aa62a1ab4af14
       }
 
-      server.queue.push(args[0]);
+
 
       if (!message.guild.voiceConnection) message.member.voiceChannel.join().then(function(connection) {
         //console.log(message.guild.member(client.user).voiceChannel)
@@ -210,6 +280,27 @@ client.on("message", async message => {
 
     }
 
+<<<<<<< HEAD
+=======
+    if (command === prefix+"purge") {
+      console.log(message.author.username + "  Requested:   " + message.content);
+      let messagecount = args[0];
+      if (!message.member.hasPermission('ADMINISTRATOR')) {
+        message.reply("Hold up!, You need to be Administrator too use this!")
+        return;
+
+      }
+      console.log(message.author.roles)
+      if (messagecount <= 1) {
+        message.reply("hold up!, It need to be more than "+args[0])
+
+      } else {
+        //console.log(messagecount)
+        message.channel.fetchMessages({limit: messagecount}).then(messages => message.channel.bulkDelete(messages));
+        //message.delete()
+      }
+    }
+>>>>>>> f98f5fbbe337f1dedb90112c648aa62a1ab4af14
 
 
     if(command === `${prefix}newprefix`) {
@@ -230,19 +321,17 @@ client.on("message", async message => {
 
 
     if (message.content === prefix+'help') {
-      message.author.send(" _____________________________")
-      message.author.send("Here is a list of Commands.")
-      //message.author.send(" ")
-      message.author.send(" * !purge number")
-      message.author.send(" * !newprefix new-prefix")
-      message.author.send(" * !about")
-      message.author.send(" * ping")
-      message.author.send(" __And Some muzic Stuff__")
-      //message.author.send(" ")
-      message.author.send(" * !play Youtube-link")
-      message.author.send(" * !skip")
-      message.author.send(" * !stop")
-      message.author.send(" ____________________________")
+      message.author.send("```Here is a list of my commands please note that all of these commands has the set prefix before \
+      * purge number NOTE: Only for ADMINISTRATORS \
+      * newprefix prefix \
+      * userinfo user NOTE: if no user defined the user info will be of you \
+      * help \
+      ____________Music__________ \
+      *play song name \
+      *skip \
+      *stop \
+      I'm adding more stuff soon, if you have contact with DanielSv03 please feel free to suggest improvments :) ```")
+      
     }
 })
 
